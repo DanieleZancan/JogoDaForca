@@ -1,0 +1,147 @@
+# Projeto 1 - Desenvolvimento de Jogo da Forca em Linguagem Python. - Versão 1 (SIMPLES).
+
+import random
+from os import system, name
+
+def limpa_tela():
+ 
+    # Windows
+    if name == 'nt':
+        _ = system('cls')
+ 
+    # Mac ou Linux
+    else:
+        _ = system('clear')
+
+def display_hangman(chances):
+
+    stages = [
+                """
+                   --------
+                   |      |
+                   |      O
+                   |     \\|/
+                   |      |
+                   |     / \\
+                   -
+                """,
+                
+                """
+                   --------
+                   |      |
+                   |      O
+                   |     \\|/
+                   |      |
+                   |     / 
+                   -
+                """,
+                
+                """
+                   --------
+                   |      |
+                   |      O
+                   |     \\|/
+                   |      |
+                   |      
+                   -
+                """,
+                
+                """
+                   --------
+                   |      |
+                   |      O
+                   |     \\|
+                   |      |
+                   |     
+                   -
+                """,
+                
+                """
+                   --------
+                   |      |
+                   |      O
+                   |      |
+                   |      |
+                   |     
+                   -
+                """,
+                
+                """
+                   --------
+                   |      |
+                   |      O
+                   |    
+                   |      
+                   |     
+                   -
+                """,
+                
+                """
+                   --------
+                   |      |
+                   |      
+                   |    
+                   |      
+                   |     
+                   -
+                """
+    ]
+    return stages[chances]
+
+# Função do jogo
+def jogo():
+
+    limpa_tela()
+    print("\nBem vindo ao Jogo da Forca!")
+    print("Tente adivinhar a palavra abaixo:\n")
+    
+    palavras = ['amarelo', 'azul', 'branco', 'cinza', 'laranja', 'marrom', 'rosa', 'verde', 'vermelho']
+    
+    palavra = random.choice(palavras)
+    
+    lista_letras_palavras = [letra for letra in palavra]
+    
+    tableau = ["_"] * len(palavra)
+    
+    chances = 6
+    
+    letras_tentativas = []
+    
+    while chances > 0:
+        
+        print(display_hangman(chances))
+        print("Palavra: ", tableau)
+        print("\n")
+        
+        tentativa = input("\nDigite uma letra: ")
+        
+        if tentativa in letras_tentativas:
+            print("Você já tentou essa letra. Escolha outra!")
+            continue
+        
+        letras_tentativas.append(tentativa)
+        
+        if tentativa in lista_letras_palavras:
+            
+            print("Você acertou a letra!")
+            
+            for indice in range(len(lista_letras_palavras)):
+
+                if lista_letras_palavras[ind] == tentativa:
+                    tableau[ind] = tentativa
+            
+            if "_" not in tableau:
+                print("\nVocê venceu! A palavra era: {}".format(palavra))
+                break
+        else:
+            print("Ops. Essa letra não está na palavra!")
+            chances -= 1
+    
+    if "_" in tabuleiro:
+        print("\nVocê perdeu! A palavra era: {}.".format(palavra))
+
+
+# Bloco main
+if __name__ == "__main__":
+    game()
+    print("\nPrograma feito em Linguagem Python. :)\n")
